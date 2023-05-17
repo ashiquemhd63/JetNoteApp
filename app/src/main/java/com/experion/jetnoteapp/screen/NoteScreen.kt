@@ -1,5 +1,6 @@
 package com.experion.jetnoteapp.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +33,7 @@ import com.experion.jetnoteapp.components.NoteInputText
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import com.experion.jetnoteapp.components.NoteButton
 import com.experion.jetnoteapp.model.Note
 import java.time.format.DateTimeFormatter
@@ -49,6 +51,7 @@ fun NoteScreen(
     var description by remember {
         mutableStateOf("")
     }
+    var context = LocalContext.current
     Column(modifier = Modifier.padding(6.dp)) {
         TopAppBar(
             title = {
@@ -93,6 +96,16 @@ fun NoteScreen(
                 onClick = {
                     if (title.isNotEmpty() && description.isNotEmpty()) {
                         //save/add to list
+                        onAddNote(
+                            Note(
+                                title = title,
+                                description = description
+                            )
+                        )
+                        Toast.makeText(
+                            context, "Note Added",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
                     }
                 })
@@ -102,7 +115,11 @@ fun NoteScreen(
         )
         LazyColumn {
             items(notes) { note ->
-                NoteRow(note = note, onNoteClicked = {})
+                NoteRow(note = note,
+                    onNoteClicked = {
+                        onRemoveNote(note)
+                    }
+                )
 
             }
         }
@@ -132,7 +149,10 @@ fun NoteRow(
         ) {
             Text(text = note.title, style = MaterialTheme.typography.headlineMedium)
             Text(text = note.description, style = MaterialTheme.typography.headlineSmall)
-            Text(text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE, d MMM")), style = MaterialTheme.typography.labelSmall)
+            Text(
+                text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE, d MMM")),
+                style = MaterialTheme.typography.labelSmall
+            )
         }
 
     }
