@@ -35,7 +35,10 @@ class MainActivity : ComponentActivity() {
                         onAddNote = {
                                     notes.add(it)
                         },
-                        onRemoveNote = {})
+                        onRemoveNote = {
+                            notes.remove(it)
+
+                        })
                 }
             }
         }
