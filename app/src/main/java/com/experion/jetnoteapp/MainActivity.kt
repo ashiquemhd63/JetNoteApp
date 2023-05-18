@@ -15,7 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.experion.jetnoteapp.data.NotesDataSource
 import com.experion.jetnoteapp.model.Note
 import com.experion.jetnoteapp.screen.NoteScreen
+import com.experion.jetnoteapp.screen.NoteViewModel
 import com.experion.jetnoteapp.ui.theme.JetNoteAppTheme
+//import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +35,7 @@ class MainActivity : ComponentActivity() {
 
                     NoteScreen(notes = notes,
                         onAddNote = {
-                                    notes.add(it)
+                            notes.add(it)
                         },
                         onRemoveNote = {
                             notes.remove(it)
@@ -45,6 +47,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Composable
+fun NotesApp(
+//    noteViewModel: NoteViewModel = viewModel()
+) {
+
+
+}
 
 @Preview(showBackground = true)
 @Composable
